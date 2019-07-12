@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="js/jq.js" type="text/javascript"></script>
+
+<meta charset="UTF-8">
+<title>宿管员登录</title>
+</head>
+<body>
+	<div style="text-align: center;">
+		<br><br><br>
+		<form id="login_form">
+			<input type="text" name="hpname" placeholder="请输入名字">
+			<br><br>
+			<input type="password" name="password" placeholder="请输入密码">
+			<br><br>
+			<input type="button" value="登录" id="sub_login">
+		</form>
+		<br><br>
+		<div>
+			<span>还没有账号?速来注册,你也会是宿管 
+			<a href="Registration.html">注册账号</a> </span>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+		$('#sub_login').click(function () {
+        var url = "/dormitory/HouseParents/logining";
+        var data = $("#login_form").serialize();
+        $.ajax({
+            "url": url,
+            "data": data,
+            "type": "POST",
+            "dataType": "json",
+            "success": function (json) {
+                if (json.state == 200) {
+                    alert("登录成功");
+                    location.href="DormitoryManageSystem.html";
+                } else {
+                    alert(json.message);
+                }
+            }
+        });
+    });
+</script>
+</html>

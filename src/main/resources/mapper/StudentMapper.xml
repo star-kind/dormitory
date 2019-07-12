@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!--namespace="对应的持久层接口路径" -->
+<mapper namespace="college.dorm.mapper.StudentMapper">
+
+	<select id="selectStudentByStudentName"
+		resultType="college.dorm.databean.Student">
+		SELECT
+		sid,
+		student_no AS studentNo,
+		student_name AS
+		studentName,
+		building_no AS buildingNo,
+		chamber_no AS chamberNo,
+		enter_time AS enterTime
+		FROM
+		student
+		WHERE
+		studentName=#{studentName}
+	</select>
+
+	<select id="selectStudentBySid"
+		resultType="college.dorm.databean.Student">
+		SELECT
+		sid,
+		student_no AS studentNo,
+		student_name AS
+		studentName,
+		building_no AS buildingNo,
+		chamber_no AS chamberNo,
+		enter_time AS enterTime
+		FROM
+		student
+		WHERE
+		sid=#{sid}
+	</select>
+
+	<select id="selectStudentByStudentNo"
+		resultType="college.dorm.databean.Student">
+		SELECT
+		sid,
+		student_no AS studentNo,
+		student_name AS
+		studentName,
+		building_no AS buildingNo,
+		chamber_no AS chamberNo,
+		enter_time AS enterTime
+		FROM
+		student
+		WHERE
+		student_no=#{studentNo}
+	</select>
+
+	<select id="selectAllStudents"
+		resultType="college.dorm.databean.Student">
+		SELECT
+		sid,
+		student_no AS studentNo,
+		student_name AS
+		studentName,
+		building_no AS buildingNo,
+		chamber_no AS chamberNo,
+		enter_time AS enterTime
+		FROM
+		student
+	</select>
+
+	<insert id="insertIntoStudent">
+		INSERT INTO
+		student
+		(student_no,
+		student_name,
+		building_no,
+		chamber_no,
+		enter_time)
+		VALUES
+		(#{studentNo},
+		#{studentName},
+		#{buildingNo},
+		#{chamberNo},
+		#{enterTime})
+	</insert>
+
+	<delete id="deleteByStudentNo">
+		DELETE FROM student WHERE student_no=#{studentNo}
+	</delete>
+
+	<delete id="deleteBySid">
+		DELETE FROM student WHERE sid=#{sid}
+	</delete>
+
+	<update id="updateStudentBySid">
+		UPDATE
+		student
+		SET
+		student_name=#{studentName},
+		building_no=#{buildingNo},
+		chamber_no=#{chamberNo}
+		WHERE
+		sid=#{sid}
+	</update>
+	
+	<update id="updateStudentByStudentNo">
+		UPDATE
+		student
+		SET
+		student_name=#{studentName},
+		building_no=#{buildingNo},
+		chamber_no=#{chamberNo}
+		WHERE
+		student_no=#{studentNo}
+	</update>
+</mapper>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="js/jq.js" type="text/javascript"></script>
+
+<meta charset="UTF-8">
+<title>登记新访客</title>
+</head>
+<body>
+	<div style="text-align: center;">
+		<form id="visi_form">
+			<input type="text" name="visitorName" placeholder="请输入访客姓名"
+				class="inputclz" maxlength="8"> <br>
+			<br>
+			<br> <input type="text" name="visitorCardno"
+				placeholder="请输入访客证件号" class="inputclz"> <br>
+			<br>
+			<br> <input type="text" name="visitedStudentName"
+				placeholder="请输入被访学生姓名" class="inputclz" maxlength="8"> <br>
+			<br>
+			<br> <input type="text" name="visitedStudentBuilding"
+				placeholder="请输入被访学生楼号" class="inputclz"> <br>
+			<br>
+			<br> <input type="text" name="visitedStudentChamber"
+				placeholder="请输入被访学生寝室号" class="inputclz"> <br>
+			<br>
+			<br> <input type="text" name="relation"
+				placeholder="请输入访客与被访者的关系" class="inputclz"> <br>
+			<br>
+			<br> <input type="button" value="确定" id="sub_commit"> <br>
+			<br>
+			<br> <input type="reset" value="重置" id="sub_reset">
+		</form>
+		<br>
+		<br>
+		<br>
+		<div>
+			<a href="DormitoryManageSystem.html">返回Dormitory Manage System
+				Index</a>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	/* */
+	$('#sub_commit').click(function() {
+		var url = "/dormitory/Visit/add_visitor";
+		var data = $("#visi_form").serialize();
+		$.ajax({
+			"url" : url,
+			"data" : data,
+			"type" : "POST",
+			"dataType" : "json",
+			"success" : function(json) {
+				if (json.state == 200) {
+					alert("新增成功");
+					location.href = "DormitoryManageSystem.html";
+				} else {
+					alert(json.message);
+				}
+			}
+		});
+	});
+
+	/* */
+	$('#sub_reset').click(function() {
+		$(".inputclz").val('')
+	});
+</script>
+</html>

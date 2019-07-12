@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!--namespace="对应的持久层接口路径"-->
+<mapper namespace="college.dorm.mapper.HouseparentMapper">
+    <select id="selectByHpname" resultType="college.dorm.databean.Houseparent">
+        SELECT
+        hpid,
+        hpname,
+        password
+        FROM
+        houseparent
+        WHERE
+        hpname=#{hpname}
+    </select>
+
+    <select id="selectByHpid" resultType="college.dorm.databean.Houseparent">
+        SELECT
+        hpid,
+        hpname,
+        password
+        FROM
+        houseparent
+        WHERE
+        hpid=#{hpid}
+    </select>
+
+    <insert id="insertHouseparent">
+        INSERT INTO
+        houseparent
+        (hpname,password)
+        VALUES
+        (#{hpname},#{password})
+     </insert>
+</mapper>

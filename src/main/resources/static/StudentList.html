@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="js/jq.js" type="text/javascript"></script>
+
+<script src="myjs/StudentsLists.js" type="text/javascript"></script>
+
+
+<meta charset="UTF-8">
+<title>全体住宿生名单</title>
+</head>
+<body>
+	<div style="text-align: center;">
+	<table cellspacing="0" cellpadding="0" border="1" width="80%" id="mine_table">
+            <th>序号</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>楼号</th>
+            <th>寝室号</th>
+            <th>入住时间</th>
+            <th>删除</th>
+            <th>修改</th>
+            
+            <tbody class="tab_body">
+
+            </tbody>
+        </table>
+		</div>
+		<br><br>
+		<div>
+			<a href="DormitoryManageSystem.html">返回Dormitory Manage System
+				Index</a>
+		</div>
+	
+</body>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    showStudsList();
+    changingDateFormat();
+});
+
+/**
+ * 删除student
+ */
+function deleBySid(sid) {
+	var url='/dormitory/Students/delete_stud';
+	 $.ajax({
+		 	 url: url,
+	         type: "POST",
+	         data:{'sid':sid},
+	         dataType: "json",
+	         success: function (j){
+	        	 if (j.state == 200) {
+					alert('删除成功')
+					location.reload()
+				}else{
+					alert(j.message)
+				}
+	         }
+	 });   
+}
+
+/**
+ * 将要修改的数据发送给后台
+ */
+ function editBySid(sid) {
+	 var url='/dormitory/Students/show_edit_stud';
+	 $.ajax({
+		 	 url: url,
+	         type: "POST",
+	         data:{'sid':sid},
+	         dataType: "json",
+	         success: function (j){
+	        	 if (j.state == 200) {
+	        		 location.href="ExecuteEditStud.html";
+				}else{
+					alert(j.message)
+				}
+	         }
+	 });   
+}
+</script>
+</html>

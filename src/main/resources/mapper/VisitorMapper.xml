@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!--namespace="对应的持久层接口路径" -->
+<mapper namespace="college.dorm.mapper.VisitorMapper">
+
+	<select id="selectByVisitorName"
+		resultType="college.dorm.databean.Visitor">
+		SELECT
+		vid,
+		visitor_name AS visitorName,
+		visitor_cardno AS
+		visitorCardno,
+		visited_student_name AS visitedStudentName,
+		visited_student_building AS visitedStudentBuilding,
+		visited_student_chamber AS visitedStudentChamber,
+		relation,
+		visitor_time AS visitorTime,
+		leave_time AS leaveTime,
+		FORM
+		visitor
+		WHERE
+		visitor_name=#{visitorName}
+	</select>
+
+	<select id="selectByVid"
+		resultType="college.dorm.databean.Visitor">
+		SELECT vid,visitor_name AS visitorName,visitor_cardno AS
+		visitorCardno,visited_student_name AS
+		visitedStudentName,visited_student_building AS
+		visitedStudentBuilding,visited_student_chamber AS
+		visitedStudentChamber,relation,visitor_time AS visitorTime,leave_time
+		AS leaveTime FROM visitor WHERE	vid=#{vid}
+	</select>
+
+	<insert id="insertIntoVisitor">
+		INSERT INTO visitor
+		(visitor_name,
+		visitor_cardno,
+		visited_student_name,
+		visited_student_building,
+		visited_student_chamber,
+		relation,
+		visitor_time,
+		leave_time)
+		VALUES
+		(#{visitorName},
+		#{visitorCardno},
+		#{visitedStudentName},
+		#{visitedStudentBuilding},
+		#{visitedStudentChamber},
+		#{relation},
+		#{visitorTime},
+		#{leaveTime})
+	</insert>
+
+	<delete id="deleteByVid">
+		DELETE FROM visitor WHERE vid=#{vid}
+	</delete>
+
+	<delete id="deleteByVisitorName">
+		DELETE FROM visitor WHERE visitor_name=#{visitorName}
+	</delete>
+
+	<select id="selectAllVisitor"
+		resultType="college.dorm.databean.Visitor">
+		SELECT vid,visitor_name AS visitorName,visitor_cardno AS
+		visitorCardno,visited_student_name AS
+		visitedStudentName,visited_student_building AS
+		visitedStudentBuilding,visited_student_chamber AS
+		visitedStudentChamber,relation,visitor_time AS visitorTime,leave_time
+		AS leaveTime
+		FROM visitor
+	</select>
+	
+	<update id="updateVisitorByVid">
+		UPDATE
+		visitor
+		SET
+		visitor_name=#{visitorName},
+		visited_student_name=#{visitedStudentName},
+		visited_student_building=#{visitedStudentBuilding},
+		visited_student_chamber=#{visitedStudentChamber},
+		relation=#{relation}
+		WHERE
+		vid=#{vid}
+	</update>
+</mapper>

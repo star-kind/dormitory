@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="js/jq.js" type="text/javascript"></script>
+
+<meta charset="UTF-8">
+<title>历史访客名单</title>
+</head>
+<body>
+	<div style="text-align: center;">
+		<table cellspacing="0" cellpadding="0" border="1" width="60%"
+			id="mine_table">
+			<th>序号</th>
+			<th>访客证件号</th>
+			<th>访客姓名</th>
+			<th>所访学生姓名</th>
+			<th>所访学生楼号</th>
+			<th>所访学生寝室号</th>
+			<th>双方关系</th>
+			<th>到访时间</th>
+			<th>离去时间</th>
+			<th>删除</th>
+			<th>修改</th>
+
+			<tbody class="tab_body1">
+
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<br>
+	<div>
+		<a href="DormitoryManageSystem.html">返回Dormitory Manage System
+			Index</a>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		showVisitorsList();
+		changingDateFormat();
+		changingDateFormatCopy();
+		numberTranstoScript();
+	});
+
+	/**
+	 * 住宿生列表展示
+	 */
+	function showVisitorsList() {
+		var url = "/dormitory/Visit/exhibi_visitor";
+		$
+				.ajax({
+					url : url,
+					type : "GET",
+					contentType : "application/json;cherset=utf-8",
+					dataType : "json",
+					success : function(j) {
+						if (j.state == 200) {
+							$(".tab_body1").empty();
+
+							var list = j.data;
+							if (list !== null) {
+								//对list值进行遍历
+								for (var index = 0; index <= list.length; index++) {
+									var child = '<tr> <td>'
+											+ index
+											+ ' </td>'
+											+ '<td class="visitorCardno_item">'
+											+ list[index].visitorCardno
+											+ '</td> '
+											+ '<td class="visitorName_item">'
+											+ list[index].visitorName
+											+ '</td> '
+											+ '<td class="visitedStudentName_item">'
+											+ list[index].visitedStudentName
+											+ '</td> '
+											+ '<td class="visitedStudentBuilding_item">'
+											+ list[index].visitedStudentBuilding
+											+ '</td> '
+											+ '<td class="visitedStudentChamber_item">'
+											+ list[index].visitedStudentChamber
+											+ '</td> '
+											+ '<td class="relation_item">'
+											+ list[index].relation
+											+ '</td> '
+											+ '<td class="visitorTime_item">'
+											+ list[index].visitorTime
+											+ '</td> '
+											+ '<td class="leaveTime_item">'
+											+ list[index].leaveTime
+											+ '</td> '
+											+
+
+											'<td><a href="javascript:deleByVid('
+											+ list[index].vid
+											+ ')">删除</a></td> '
+											+ '<td><a href="javascript:editByVid('
+											+ list[index].vid
+											+ ')">修改</a></td>' + '</tr>';
+
+									//将信息追加
+									$(".tab_body1").append(child);
+								}
+
+							}
+						}
+					}
+				});
+	}
+
+	/**
+	 * 将格林威治时间格式转为年月日格式
+	 * 
+	 * @returns
+	 */
+	function changingDateFormat() {
+		// 按classname获取一长串String
+		var arr = $('.visitorTime_item').text();
+
+		// 每28个字符为一单位日期String
+		var unit = 28;
+		var part = arr.length / unit;
+
+		var j = 0;
+		var strArr = [];
+		var vari = "";
+		for (var i = 1; i <= part; i++) {
+			// 分段截取28字符
+			var sub = arr.substring(j, unit * i);
+			j = unit * i;
+
+			vari = GMTToStr(sub);
+
+			$('.visitorTime_item').eq(i - 1).text(vari);
+		}
+
+	}
+
+	/**
+	 * 将格林威治时间格式转为年月日格式
+	 * 
+	 * @returns
+	 */
+	function changingDateFormatCopy() {
+		// 按classname获取一长串String
+		var arr = $('.leaveTime_item').text();
+
+		// 每28个字符为一单位日期String
+		var unit = 28;
+		var part = arr.length / unit;
+
+		var j = 0;
+		var strArr = [];
+		var vari = "";
+		for (var i = 1; i <= part; i++) {
+			// 分段截取28字符
+			var sub = arr.substring(j, unit * i);
+			j = unit * i;
+
+			vari = GMTToStr(sub);
+
+			$('.leaveTime_item').eq(i - 1).text(vari);
+		}
+
+	}
+
+	/**
+	 * 格林威治时间转为普通格式
+	 * 
+	 * @param greenwich
+	 * @returns
+	 */
+	function GMTToStr(greenwich) {
+		var date = new Date(greenwich);
+
+		var gener = date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+				+ date.getDate() + ' ' + date.getHours() + ':'
+				+ date.getMinutes() + ':' + date.getSeconds();
+
+		return gener;
+	}
+
+	/**
+	 * 删除student
+	 */
+	function deleByVid(vid) {
+		var url = '/dormitory/Visit/del_visitor';
+		$.ajax({
+			url : url,
+			type : "POST",
+			data : {
+				'vid' : vid
+			},
+			dataType : "json",
+			success : function(j) {
+				if (j.state == 200) {
+					alert('删除成功')
+					location.reload()
+				} else {
+					alert(j.message)
+				}
+			}
+		});
+	}
+
+	/**
+	 * 将要修改的数据发送给后台
+	 */
+	function editByVid(vid) {
+		var url = '/dormitory/Visit/show_edit_vi';
+		$.ajax({
+			url : url,
+			type : "POST",
+			data : {
+				'vid' : vid
+			},
+			dataType : "json",
+			success : function(j) {
+				if (j.state == 200) {
+					location.href = "ExecuteEditVi.html";
+				} else {
+					alert(j.message)
+				}
+			}
+		});
+	}
+
+	/**
+	 * @returns
+	 */
+	function numberTranstoScript() {
+		var compets = [];
+		$('.relation_item').each(function() {
+			var compet = $(this).text();
+			compets.push(compet);
+		});
+
+		for (var i = 0; i < compets.length; i++) {
+			if (compets[i] == 0) {
+				$('.relation_item').eq(i).text('家人');
+			} else if (compets[i] == 1) {
+				$('.relation_item').eq(i).text('朋友');
+			} else if (compets[i] == 2) {
+				$('.relation_item').eq(i).text('同学');
+			} else if (compets[i] == 3) {
+				$('.relation_item').eq(i).text('老师');
+			} else if (compets[i] == 4) {
+				$('.relation_item').eq(i).text('外卖快递');
+			} else {
+				$('.relation_item').eq(i).text('其他');
+			}
+		}
+	}
+</script>
+
+</html>
