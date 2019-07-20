@@ -43,7 +43,7 @@ INSRET INTO houseparent (hpname,password) VALUES ('admin01','0123456');
 INSRET INTO houseparent (hpname,password) VALUES ('admin','0123456');
 
 ###
-| CREATE TABLE `visitor` (
+CREATE TABLE `visitor` (
   `vid` int(30) NOT NULL,
   `visitor_name` varchar(10) NOT NULL,
   `visitor_cardno` varchar(40) NOT NULL COMMENT '身份证号',
