@@ -41,7 +41,11 @@ INSRET INTO houseparent (hpname,password) VALUES ('admin01','0123456');
 
 INSRET INTO houseparent (hpname,password) VALUES ('admin','0123456');
 
+<<<<<<< HEAD:DraftFiles/db.sql
 ##
+=======
+###
+>>>>>>> d13e1e124b6f70374daefbf9b8e9e98e027ade4f:src/main/resources/db.sql
 CREATE TABLE `visitor` (
   `vid` int(30) NOT NULL,
   `visitor_name` varchar(10) NOT NULL,
@@ -61,6 +65,7 @@ SELECT vid,visitor_name AS visitorName,visitor_cardno AS visitorCardno,visited_s
 FROM visitor; 
 
 alter table visitor change vid vid int(30) not null auto_increment;
+<<<<<<< HEAD:DraftFiles/db.sql
 
 -- ----------------------------
 -- 加字段
@@ -132,3 +137,5 @@ select hpid,id_card,competence from houseparent;
 
 -- 431233198811230333
 update houseparent set competence=2 where hpid=22;
+=======
+>>>>>>> d13e1e124b6f70374daefbf9b8e9e98e027ade4f:src/main/resources/db.sql
