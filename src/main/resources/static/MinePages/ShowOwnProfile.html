@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="../CssFrame/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="../CssFrame/bootstrap.css">
+
+<script src="../Jquery/Jquery-3.3.1.js" type="text/javascript"></script>
+<!-- 曲奇包要在min包之后 -->
+<script src="../Jquery/jquery.cookie.js" type="text/javascript"></script>
+
+<meta charset="utf-8">
+<title>宿舍管理员个人资料页</title>
+<!--  -->
+<style type="text/css">
+.item_cols {
+	margin-top: 2%;
+}
+
+.fa {
+	color: #55a319;
+}
+</style>
+
+</head>
+<body>
+	<div style="text-align: center;" class="container">
+		<div class="row">
+			<div class="col-md-10" style="margin-top: 6%;">
+				<span class="fa fa-cart-plus"> <!-- -------------------------------------------------------------------------------- -->
+					<a href="RevampOwnProfile.html" style="margin-right: 10px;">修改资料</a> <!-- -------------------------------------------------------------------------------- -->
+					<a href="RevampPassword.html" style="margin-left: 10px;">修改密码</a> <!-- ------------------------------------------------------------------------------------- -->
+					<a href="UploadAvatar.html" style="margin-left: 20px;">修改头像</a>
+				</span>
+				<!--  -->
+				<div class="item_cols">
+					<span class="fa fa-cart-plus">我的头像:</span> <img src="" id="portrait"> <br>
+				</div>
+
+				<!--  -->
+				<div class="item_cols">
+					<span class="fa fa-cart-plus">名字:</span> <span id="hpname" class="fa fa-cart-plus"></span>
+				</div>
+
+				<!--  -->
+				<div class="item_cols">
+					<span class="fa fa-cart-plus">身份证号:</span> <span id="idCard" class="fa fa-cart-plus"></span>
+				</div>
+
+				<!--  -->
+				<div class="item_cols">
+					<span class="fa fa-cart-plus">电话:</span> <span id="phone" class="fa fa-cart-plus"></span>
+				</div>
+
+				<!--  -->
+				<div class="item_cols">
+					<span class="fa fa-cart-plus">职务级别:</span> <span id="competence" class="fa fa-cart-plus"></span>
+				</div>
+
+				<!--  -->
+				<div class="item_cols">
+					<span class="fa fa-cart-plus">在职状态:</span> <span id="isIncumbency" class="fa fa-cart-plus"></span>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!--  -->
+	<br>
+	<br>
+	<div class="container" id="footer" style="text-align: center;">
+		<div class="col-md-12">
+			<a href="DormitoryManageSystem.html" style="margin-right: 4%;">返回系统导航页</a>
+		</div>
+	</div>
+</body>
+<!-- JS -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		exhibitProfile();
+	});
+
+	function exhibitProfile() {
+		var url = '/dormitory/HouseParents/exhibitProfile';
+		var competence = document.getElementById('competence');
+		var isIncumbency = document.getElementById('isIncumbency');
+
+		$.ajax({
+			"url" : url,
+			"dataType" : "json",
+			"type" : 'GET',
+			"success" : function(r) {
+				/*  */
+				if (r.state === 200) {
+					$('#hpname').text(r.data.hpname);
+					$('#phone').text(r.data.phone);
+					$('#idCard').text(r.data.idCard);
+
+					/*  */
+					switch (r.data.competence) {
+					case 0:
+						competence.innerText = '普通宿管员';
+						break;
+
+					case 1:
+						competence.innerText = '高级宿管员';
+						break;
+
+					case 2:
+						competence.innerText = '超级宿管员';
+						break;
+					}
+
+					/*  */
+					switch (r.data.isIncumbency) {
+					case 0:
+						isIncumbency.innerText = '不在职上';
+						break;
+
+					case 1:
+						isIncumbency.innerText = '在职中';
+						break;
+					}
+
+					/*  */
+					if (r.data.portrait != null && r.data.portrait != '') {
+						$('#portrait').attr('src', "http://localhost:8080/dormitory" + r.data.portrait)
+					}
+
+				} else {
+					alert(r.message);
+				}
+				/*  */
+			}
+		/*  */
+		});
+	}
+</script>
+</html>

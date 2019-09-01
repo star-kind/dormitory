@@ -5,66 +5,63 @@ import java.io.Serializable;
 /**
  * 响应结果类型Json
  *
- * @param <T> 服务器向客户端响应的数据的类型
+ * @param <T>
+ *            服务器向客户端响应的数据的类型
  */
 public class ResponseEntity<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Integer state;
-    private String message;
-    private T data;
+	private Integer state;
+	private String message;
+	private T data;
 
-    public ResponseEntity() {
-    }
+	public ResponseEntity() {
+	}
 
-    public ResponseEntity(Integer state, String message) {
-        this.state = state;
-        this.message = message;
-    }
+	public ResponseEntity(Integer state) {
+		this.state = state;
+	}
 
-    public ResponseEntity(Integer state) {
-        this.state = state;
-    }
+	public ResponseEntity(Integer state, T data) {
+		this.state = state;
+		this.data = data;
+	}
 
-    public ResponseEntity(Integer state, T data) {
-        this.state = state;
-        this.data = data;
-    }
+	public Integer getState() {
+		return state;
+	}
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+	public void setState(Integer state) {
+		this.state = state;
+	}
 
-    public Integer getState() {
-        return state;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setState(Integer state) {
-        this.state = state;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public T getData() {
+		return data;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public void setData(T data) {
+		this.data = data;
+	}
 
-    public T getData() {
-        return data;
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ResponseEntity [state=");
+		builder.append(state);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", data=");
+		builder.append(data);
+		builder.append("]");
+		return builder.toString();
+	}
 
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "ResponseEntity{" +
-                "state=" + state +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
-    }
 }

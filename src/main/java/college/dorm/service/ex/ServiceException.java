@@ -1,4 +1,4 @@
-package college.dorm.service.except;
+package college.dorm.service.ex;
 
 /**
  * 业务异常超类

@@ -1,6 +1,8 @@
-package college.dorm.databean;
+package college.dorm.pojo;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Student {
     private Integer sid;
@@ -50,6 +52,7 @@ public class Student {
         this.chamberNo = chamberNo;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getEnterTime() {
         return enterTime;
     }

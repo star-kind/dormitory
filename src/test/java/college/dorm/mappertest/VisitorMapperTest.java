@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import college.dorm.databean.Visitor;
 import college.dorm.mapper.VisitorMapper;
+import college.dorm.pojo.Visitor;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,4 +25,5 @@ public class VisitorMapperTest {
 			System.err.println(visitor);
 		}
 	}
+	
 }

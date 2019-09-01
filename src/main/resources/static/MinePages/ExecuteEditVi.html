@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="../CssFrame/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="../CssFrame/bootstrap.css">
+
+<script src="../Jquery/Jquery-3.3.1.js" type="text/javascript"></script>
+
+<meta charset="UTF-8">
+<title>修改访客资料</title>
+</head>
+<body>
+	<div style="text-align: center;">
+		<form id="vis_form" style="margin-top: 42px;">
+			<p>证件号(不可修改)</p>
+			<br> <input type="text" name="visitorCardno" placeholder="" class="inputclz0" readonly="readonly">
+
+			<p>请输入新的访客姓名</p>
+			<br> <input type="text" name="visitorName" placeholder="" class="inputclz00"> <br> <br>
+
+			<p>请输入新的被访学生名字</p>
+			<br> <input type="text" name="visitedStudentName" placeholder="" class="inputclz01"> <br> <br>
+
+			<p>请输入新的被访宿舍楼号</p>
+			<br> <input type="text" maxlength="2" name="visitedStudentBuilding" placeholder="" class="inputclz02"> <br> <br>
+
+			<p>请输入新的被访寝室编号</p>
+			<br> <input type="text" maxlength="4" name="visitedStudentChamber" placeholder="" class="inputclz03"> <br> <br>
+
+			<p>请输入新的双方关系</p>
+			<br> <input type="text" maxlength="1" name="relation" placeholder="" class="inputclz04"> <br> <br>
+
+			<div>
+				<input type="button" class="btn btn-primary" value="确定" id="sub_commit" onclick="visiDoEdit()"
+					style="margin-right: 20px;">
+				<!--  -->
+				<input type="button" class="btn btn-primary" value="重置" id="sub_reset" style="margin-left: 20px;">
+			</div>
+		</form>
+		
+		<!--  -->
+		<div style="margin-top: 36px;">
+			<a href="DormitoryManageSystem.html">返回系统导航页</a>
+		</div>
+		
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		showEidtStud();
+	});
+
+	function showEidtStud() {
+		var url = "/dormitory/Visit/show_will_edit_vi";
+		$.ajax({
+			url : url,
+			type : "GET",
+			contentType : "application/json;cherset=utf-8",
+			dataType : "json",
+			success : function(j) {
+				if (j.state == 200) {
+					$('.inputclz0').val(j.data.visitorCardno);
+					$('.inputclz00').attr('placeholder', j.data.visitorName);
+					$('.inputclz01').attr('placeholder', j.data.visitedStudentName);
+					$('.inputclz02').attr('placeholder', j.data.visitedStudentBuilding);
+					$('.inputclz03').attr('placeholder', j.data.visitedStudentChamber);
+					$('.inputclz04').attr('placeholder', j.data.relation);
+				} else {
+					console.log(j.message);
+				}
+			}
+		});
+	}
+
+	/* 发往后台修改资料 */
+	function visiDoEdit() {
+		var url = "/dormitory/Visit/exec_edit_vi";
+		var data = $("#vis_form").serialize();
+		$.ajax({
+			"url" : url,
+			"data" : data,
+			"type" : "POST",
+			"dataType" : "json",
+			"success" : function(json) {
+				if (json.state == 200) {
+					alert("修改成功");
+					location.href = "ShowVisitorList.html";
+				} else {
+					alert(json.message);
+				}
+			}
+		});
+	}
+
+	/* 重置 */
+	$('#sub_reset').click(function() {
+		$(".inputclz01").val('')
+		$(".inputclz02").val('')
+		$(".inputclz03").val('')
+		$(".inputclz04").val('')
+		$(".inputclz00").val('')
+	});
+</script>
+</html>

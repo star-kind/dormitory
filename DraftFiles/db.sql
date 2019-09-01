@@ -1,4 +1,3 @@
-
 CREATE DATABASE dormitory;
 
 # 学生
@@ -42,8 +41,8 @@ INSRET INTO houseparent (hpname,password) VALUES ('admin01','0123456');
 
 INSRET INTO houseparent (hpname,password) VALUES ('admin','0123456');
 
-###
-| CREATE TABLE `visitor` (
+##
+CREATE TABLE `visitor` (
   `vid` int(30) NOT NULL,
   `visitor_name` varchar(10) NOT NULL,
   `visitor_cardno` varchar(40) NOT NULL COMMENT '身份证号',
@@ -62,3 +61,74 @@ SELECT vid,visitor_name AS visitorName,visitor_cardno AS visitorCardno,visited_s
 FROM visitor; 
 
 alter table visitor change vid vid int(30) not null auto_increment;
+
+-- ----------------------------
+-- 加字段
+-- ----------------------------
+ALTER TABLE houseparent ADD phone CHAR(40) NOT NULL COMMENT '电话号码';
+
+ALTER TABLE houseparent ADD id_cart CHAR(50) NOT NULL COMMENT '身份证号';
+
+ALTER TABLE houseparent ADD reg_time DATETIME COMMENT '注册时间';
+
+ALTER TABLE houseparent ADD salt VARCHAR(42) NOT NULL COMMENT '盐值';
+-- ----------------------------
+
+-- 设不自动增长
+ALTER TABLE houseparent MODIFY hpid INT(26);
+
+# 添加hpname注释:宿管员之名
+ALTER TABLE houseparent CHANGE hpname hpname VARCHAR(32) NOT NULL COMMENT '宿管员名字';
+
+# 删除主键
+ALTER TABLE houseparent DROP PRIMARY KEY;
+
+# 删除字段
+ALTER TABLE houseparent DROP COLUMN id_cart;
+
+ALTER TABLE houseparent ADD id_cart CHAR(50) UNIQUE NULL COMMENT '身份证号';
+
+# 给身份证添加唯一约束
+# ALTER TABLE houseparent ADD CONSTRAINT UNIQUE (id_cart);
+
+# 添加主键
+ALTER TABLE houseparent ADD PRIMARY KEY(hpid);
+
+-- 设置ID自增
+ALTER TABLE houseparent MODIFY hpid INT(26) AUTO_INCREMENT COMMENT '宿管员之表的ID';
+
+-- 头像
+ALTER TABLE houseparent ADD portrait CHAR(75) NULL COMMENT '头像';
+
+-- 权限
+ALTER TABLE houseparent ADD competence int(1) NOT NULL DEFAULT '0' COMMENT '权限:0-普通,1-高级,2-超级';
+
+-- 是否在职
+ALTER TABLE houseparent ADD is_incumbency int(1) NOT NULL DEFAULT '1' COMMENT '是否在职:0-离职,1-在职';
+
+DELETE FROM houseparent WHERE hpid IN (1,6,7,8);
+
+update houseparent set hpname='wdf',phone='1997464',portrait='fasfad.png' where hpid=10;
+
+select count(competence) as result from houseparent where competence=1;
+
+-- 根据权限和ID更新是否在职
+UPDATE houseparent SET is_incumbency=1 WHERE competence=0 AND hpid=7;
+
+select hpid,hpname,competence,is_incumbency from houseparent;
+
+# 新加一行
+insert into houseparent(hpname,password,phone,salt,reg_time,id_card,portrait)  
+VALUES("admin-olo","ano","364527945","kghomlpuy7685","2019-09-09","1534527489966t","45rfg.gif");
+
+update houseparent set password="36412" where hpid=7;
+
+# rename
+ALTER TABLE houseparent CHANGE id_cart id_card CHAR(50) NULL COMMENT '身份证号';
+
+select competence from houseparent where hpid in (15,16,17,18);
+
+select hpid,id_card,competence from houseparent;
+
+-- 431233198811230333
+update houseparent set competence=2 where hpid=22;

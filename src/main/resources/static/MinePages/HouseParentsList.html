@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="../CssFrame/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="../CssFrame/bootstrap.css">
+
+<script src="../Jquery/Jquery-3.3.1.js" type="text/javascript"></script>
+<script src="../MySelfJS/CheckFunction.js" type="text/javascript"></script>
+
+<meta charset="UTF-8">
+<title>宿舍管理员名单表</title>
+
+<style type="text/css">
+img {
+	height: 80px;
+	width: 80px;
+}
+</style>
+
+</head>
+<body>
+	<div class="container" id="content" style="text-align: center;">
+		<div class="row">
+			<div style="margin-top: 25px;">
+				<a href="DormitoryManageSystem.html">返回导航页</a>
+			</div>
+			<div class="col-md-10" style="margin-left: 5%;">
+				<h4 style="text-align: center; margin-top: 2%;">宿管员全体名单</h4>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="row">
+
+							<table id="hp_table" width="90%" border="0" cellspacing="1" cellpadding="4" bgcolor="#cccccc" align="center"
+								class="table table-bordered" style="text-align: center;">
+								<!--  -->
+								<thead>
+									<tr>
+										<th><input type="checkbox" id="volume_checks">序号</th>
+										<th>头像</th>
+										<th>名字</th>
+										<th>电话</th>
+										<th>入职时期</th>
+										<th>身份证号</th>
+
+										<!-- 普通/高级/超级 -->
+										<th>级别</th>
+										<th>在职状态</th>
+									</tr>
+								</thead>
+								<!--  -->
+								<tbody id="hp_tbody">
+
+								</tbody>
+								<!--  -->
+							</table>
+							<!--  -->
+						</div>
+
+					</div>
+				</div>
+
+				<!-- beginning -->
+				<div>
+					<!-- 多选注销/激活 -->
+					<div style="margin-top: 35px; margin-bottom: 35px;" id="mine_block00">
+						<button style="margin-right: 20px;" class="btn btn-default" id="btn_set_cancel">注销当值状态</button>
+						<button style="margin-left: 20px;" class="btn btn-default" id="btn_set_active">激活当值状态</button>
+					</div>
+
+					<!-- 按选项定之 -->
+					<div id="mine_block01">
+						<select style="margin-right: 30px; width: 80px; height: 42px;" class="btn btn-default" id="sudo_select">
+							<option value="0">删除</option>
+							<option value="1">提拔</option>
+							<option value="2">降级</option>
+							<option value="3">当班</option>
+							<option value="4">离班</option>
+						</select>
+						<button style="margin-left: 20px;" class="btn btn-default" id="btn_confirm">确认</button>
+					</div>
+				</div>
+				<!-- ending -->
+			</div>
+
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		exhibitAllHouseparent();
+	});
+
+	var host = 'http://localhost:8080/dormitory';//主域名
+
+	/* 展示所有宿管 */
+	function exhibitAllHouseparent() {
+		var url = "/dormitory/HouseParents/exhibitionAllHandler";
+
+		$.ajax({
+			'url' : url,
+			'type' : 'GET',
+			'dataType' : 'json',
+			'success' : function(re) {
+				if (re.state === 200) {
+					if (re.data != null) {
+						$('#hp_tbody').empty();
+
+						var list = re.data;
+						
+						var n=1;
+						
+						for (var i = 0; i < list.length ; i++) {
+							//获取单行文本内容对象
+							var trTd = "<tr id='hpid_#{hpid}'>"
+									+ "<td> <input type='checkbox' value='#{hpid}' class='hp_item'> <span>" + n++
+									+ "<span> </td>" + "<td> <img src=#{portrait}> </td>" + "<td> #{hpname} </td>"
+									+ "<td> #{phone} </td>" + "<td> #{regTime} </td>" + "<td> #{idCard} </td>"
+									+ "<td> #{competence} </td>" + "<td> #{isIncumbency} </td>" + "</tr>";
+
+							trTd = trTd.replace(/#{hpid}/g, list[i].hpid);
+							trTd = trTd.replace(/#{hpname}/g, list[i].hpname);
+							trTd = trTd.replace(/#{phone}/g, list[i].phone);
+							trTd = trTd.replace(/#{regTime}/g, list[i].regTime);
+							trTd = trTd.replace(/#{idCard}/g, list[i].idCard);
+
+							//肖像,无则空,有则赋
+							if (list[i].portrait != null || list[i].portrait !== '') {
+								trTd = trTd.replace(/#{portrait}/g, host + list[i].portrait);
+							}
+
+							/* competence */
+							switch (list[i].competence) {
+							case 0:
+								trTd = trTd.replace(/#{competence}/g, '普通宿管');
+								break;
+
+							case 1:
+								trTd = trTd.replace(/#{competence}/g, '高级宿管');
+								break;
+
+							case 2:
+								trTd = trTd.replace(/#{competence}/g, '超级宿管');
+								break;
+
+							}
+
+							/* isIncumbency */
+							if (list[i].isIncumbency === 0) {
+								trTd = trTd.replace(/#{isIncumbency}/g, '不在值守');
+							} else if (list[i].isIncumbency === 1) {
+								trTd = trTd.replace(/#{isIncumbency}/g, '值守中');
+							}
+
+							/* 追加 */
+							$('#hp_tbody').append(trTd);
+						}
+						/* 循环结束 */
+
+					}
+					/* 非空判断结束 */
+				} else {
+					alert(re.message);
+				}
+
+				/*  */
+			}
+
+		/*  */
+		});
+	}
+
+	/* ********** */
+	//全选/全不选效果
+	$('#volume_checks').click(function() {
+		allChoice();
+	});
+
+	var arr = [];
+
+	/* 批量注销 */
+	$('#btn_set_cancel').on('click', function() {
+		var hpids = $('input[class="hp_item"]:checked');
+
+		if (hpids.length < 1) {
+			alert('请先选中1个账号');
+			return;
+		}
+
+		hpids.each(function() {
+			arr.push(this.value);
+		});
+
+		arr = arr.join(',');//data
+		console.log(arr);
+
+		var url = '/dormitory/HouseParents/multiSetCancelHandler';//url
+
+		$.ajax({
+			url : url,
+			data : {
+				'hpids' : arr,
+				'isIncumbency' : 0
+			},
+			type : 'POST',
+			dataType : 'json',
+			success : function(r) {
+				if (r.state === 200) {
+					alert('注销成功');
+					location.reload();
+				} else {
+					alert(r.message);
+				}
+			}
+		});
+		/* AJAX END */
+	})
+
+	/* 批量激活 */
+	$('#btn_set_active').on('click', function() {
+		var hpids = $('input[class="hp_item"]:checked');
+
+		if (hpids.length < 1) {
+			alert('请先选中1个账号');
+			return;
+		}
+
+		hpids.each(function() {
+			arr.push(this.value);
+		});
+
+		arr = arr.join(',');//data
+		console.log(arr);
+
+		var url = '/dormitory/HouseParents/multiSetActiveHandler';//url
+
+		$.ajax({
+			url : url,
+			data : {
+				'hpids' : arr,
+				'isIncumbency' : 1
+			},
+			type : 'POST',
+			dataType : 'json',
+			success : function(r) {
+				if (r.state === 200) {
+					alert('激活成功');
+					location.reload();
+				} else {
+					alert(r.message);
+				}
+			}
+		});
+		/* AJAX END */
+	})
+
+	/* 超级宿管员之权 */
+	$('#btn_confirm').on('click', function() {
+		var hpids = $('input[class="hp_item"]:checked');
+
+		if (hpids.length < 1) {
+			alert('请先选中1个账号');
+			return;
+		}
+
+		hpids.each(function() {
+			arr.push(this.value);
+		});
+
+		arr = arr.join(',');//data0
+		console.log(arr);
+
+		//获取操作选项之值
+		var option = $('#sudo_select').val();
+		console.log(option);//data1
+
+		var url = '/dormitory/HouseParents/manipulateBySuDoHandler';//url
+
+		$.ajax({
+			url : url,
+			data : {
+				"hpids" : arr,
+				"option" : option
+			},
+			dataType : 'json',
+			type : 'POST',
+			success : function(r) {
+				if (r.state === 200) {
+					alert('操作成功');
+					location.reload();
+				} else {
+					alert(r.message);
+				}
+			}
+		})
+		/* AJAX OVER */
+	})
+</script>
+</html>

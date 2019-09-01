@@ -3,35 +3,331 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<!--namespace="对应的持久层接口路径"-->
+<!--namespace="对应的持久层接口路径" -->
 <mapper namespace="college.dorm.mapper.HouseparentMapper">
-    <select id="selectByHpname" resultType="college.dorm.databean.Houseparent">
-        SELECT
-        hpid,
-        hpname,
-        password
-        FROM
-        houseparent
-        WHERE
-        hpname=#{hpname}
-    </select>
+	<!-- 改密码 -->
+	<update id="updatePasswordByHpid">
+		UPDATE
+		houseparent
+		SET
+		password=#{password}
+		WHERE
+		hpid=#{hpid}
+	</update>
 
-    <select id="selectByHpid" resultType="college.dorm.databean.Houseparent">
-        SELECT
-        hpid,
-        hpname,
-        password
-        FROM
-        houseparent
-        WHERE
-        hpid=#{hpid}
-    </select>
+	<!-- 修改名字,电话,身份证 -->
+	<update id="updatePartialByHpid">
+		UPDATE
+		houseparent
+		SET
+		hpname=#{hpname},
+		phone=#{phone},
+		id_card=#{idCard}
+		WHERE
+		hpid=#{hpid}
+	</update>
 
-    <insert id="insertHouseparent">
-        INSERT INTO
-        houseparent
-        (hpname,password)
-        VALUES
-        (#{hpname},#{password})
-     </insert>
+	<!-- 批量查找权限 -->
+	<select id="batchSelectCompetenceHouseparent"
+		resultType="java.lang.Integer">
+		SELECT
+		competence
+		FROM
+		houseparent
+		WHERE
+		hpid
+		IN
+		<foreach collection="hpids" index="index" item="hpid"
+			separator="," open="(" close=")">
+			#{hpid}
+		</foreach>
+	</select>
+
+
+	<!-- 批量查找 -->
+	<select id="batchSelectHouseparent"
+		resultType="college.dorm.pojo.Houseparent">
+		SELECT
+		hpid,
+		hpname,
+		password,
+		phone,
+		salt,
+		reg_time AS regTime,
+		id_card AS
+		idCard,
+		portrait,
+		competence,
+		is_incumbency AS isIncumbency
+		FROM
+		houseparent
+		WHERE
+		hpid
+		IN
+		<foreach collection="hpids" index="index" item="hpid"
+			separator="," open="(" close=")">
+			#{hpid}
+		</foreach>
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="batchDeleteByHpids">
+		DELETE
+		FROM
+		houseparent
+		WHERE
+		hpid
+		IN
+		<foreach collection="hpids" index="index" item="hpid"
+			separator="," open="(" close=")">
+			#{hpid}
+		</foreach>
+	</delete>
+
+	<!-- 批量更新权限 -->
+	<update id="batchSetCompetenceByHpid">
+		UPDATE
+		houseparent
+		SET
+		competence=#{competence}
+		WHERE
+		hpid
+		IN
+		<foreach collection="hpids" index="index" item="hpid"
+			separator="," open="(" close=")">
+			#{hpid}
+		</foreach>
+	</update>
+
+	<!-- 批量更新是否在职 -->
+	<update id="batchSetIsIncumbencyByHpid">
+		UPDATE
+		houseparent
+		SET
+		is_incumbency=#{isIncumbency}
+		WHERE
+		hpid
+		IN
+		<foreach collection="hpids" index="index" item="hpid"
+			separator="," open="(" close=")">
+			#{hpid}
+		</foreach>
+	</update>
+
+	<select id="selectAllHouseparent"
+		resultType="college.dorm.pojo.Houseparent">
+		SELECT
+		hpid,
+		hpname,
+		password,
+		phone,
+		salt,
+		reg_time AS regTime,
+		id_card AS idCard,
+		portrait,
+		competence,
+		is_incumbency AS isIncumbency
+		FROM
+		houseparent
+	</select>
+
+	<select id="selectByHpname"
+		resultType="college.dorm.pojo.Houseparent">
+		SELECT
+		hpid,
+		hpname,
+		password,
+		phone,
+		salt,
+		reg_time AS regTime,
+		id_card AS idCard,
+		portrait,
+		competence,
+		is_incumbency AS isIncumbency
+		FROM
+		houseparent
+		WHERE
+		hpname=#{hpname}
+	</select>
+
+	<select id="selectByIdCard"
+		resultType="college.dorm.pojo.Houseparent">
+		SELECT
+		hpid,
+		hpname,
+		password,
+		phone,
+		salt,
+		reg_time AS regTime,
+		id_card AS idCard,
+		portrait,
+		competence,
+		is_incumbency AS isIncumbency
+		FROM
+		houseparent
+		WHERE
+		id_card=#{idCard}
+	</select>
+
+	<select id="selectByHpid"
+		resultType="college.dorm.pojo.Houseparent">
+		SELECT
+		hpid,
+		hpname,
+		password,
+		phone,
+		salt,
+		reg_time AS regTime,
+		id_card AS idCard,
+		portrait,
+		competence,
+		is_incumbency AS isIncumbency
+		FROM
+		houseparent
+		WHERE
+		hpid=#{hpid}
+	</select>
+
+	<insert id="insertHouseparent">
+		INSERT
+		INTO
+		houseparent
+		(
+		hpname,
+		password,
+		phone,
+		salt,
+		reg_time,
+		id_card,
+		portrait,
+		competence,
+		is_incumbency
+		)
+		VALUES
+		(
+		#{hpname},
+		#{password},
+		#{phone},
+		#{salt},
+		#{regTime},
+		#{idCard},
+		#{portrait},
+		#{competence},
+		#{isIncumbency}
+		)
+	</insert>
+
+	<update id="updateOwnProfileByHpid">
+		UPDATE
+		houseparent
+		SET
+		hpname=#{hpname},
+		phone=#{phone},
+		portrait=#{portrait}
+		where
+		hpid=#{hpid}
+	</update>
+
+	<!-- java.lang.Integer -->
+	<select id="selectCountCompentence"
+		resultType="java.lang.Integer">
+		SELECT
+		COUNT(competence)
+		FROM
+		houseparent
+		WHERE
+		competence=#{compentence}
+	</select>
+
+	<!-- 搜索身份证号码为指定值的数量 -->
+	<select id="selectCountByIdCard" resultType="java.lang.Integer">
+		SELECT
+		COUNT(id_card)
+		FROM
+		houseparent
+		WHERE
+		id_card=#{idCard}
+	</select>
+
+	<update id="updateisIncumbencyByHpidAndCompetence">
+		UPDATE
+		houseparent
+		SET
+		is_incumbency=#{isIncumbency}
+		WHERE
+		hpid=#{hpid}
+		AND
+		competence=#{competence}
+	</update>
+
+	<update id="updateisIncumbencyByIdCardAndCompetence">
+		UPDATE
+		houseparent
+		SET
+		is_incumbency=#{isIncumbency}
+		WHERE
+		id_card=#{idCard}
+		AND
+		competence=#{competence}
+	</update>
+
+	<update id="updateCompetenceByHpid">
+		UPDATE
+		houseparent
+		SET
+		competence=#{competence}
+		WHERE
+		hpid=#{hpid}
+	</update>
+
+	<update id="updateCompetenceByIdCard">
+		UPDATE
+		houseparent
+		SET
+		competence=#{competence}
+		WHERE
+		idCard=#{idCard}
+	</update>
+
+	<update id="updatePasswordByHpId">
+		UPDATE
+		houseparent
+		SET
+		password=#{password}
+		WHERE
+		hpid=#{hpid}
+	</update>
+
+	<update id="updatePasswordByIdCard">
+		UPDATE
+		houseparent
+		SET
+		password=#{password}
+		WHERE
+		idCard=#{idCard}
+	</update>
+
+	<update id="updatePortraitByHpid">
+		UPDATE
+		houseparent
+		SET
+		portrait=#{portrait}
+		WHERE
+		hpid=#{hpid}
+	</update>
+
+	<delete id="deleteHouseparentByHpids"
+		parameterType="java.lang.Integer">
+		DELETE
+		FROM
+		houseparent
+		WHERE
+		hpid
+		IN
+		(
+		<foreach collection="hpids" item="hpid" separator=",">
+			#{hpid}
+		</foreach>
+		)
+	</delete>
 </mapper>

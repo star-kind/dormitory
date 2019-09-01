@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import college.dorm.databean.Student;
-import college.dorm.databean.Visitor;
+
 import college.dorm.json.ResponseEntity;
+import college.dorm.pojo.Visitor;
 import college.dorm.service.IVisitorService;
 
 /**

@@ -5,7 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import college.dorm.databean.Student;
+import college.dorm.pojo.Student;
+
 
 /**
  * 学子,映射接口 DAO

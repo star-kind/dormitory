@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import college.dorm.databean.Visitor;
+import college.dorm.pojo.Visitor;
 
 /**
  * DAO 映射接口 访客

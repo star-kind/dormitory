@@ -6,7 +6,7 @@ this system had three module:houseparent,student,visitor.
 in system the houseparent can self reg,when houseparent logged in it,she can add/delete/modify/look over all the students/visitors.
 
 
-# technology profile
+# technology structure
 - engineering type: maven engineering
 - development environment: linux ubuntu LTS 18.04
 - database: mysql

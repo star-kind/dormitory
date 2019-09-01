@@ -9,10 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import college.dorm.databean.Student;
 import college.dorm.mapper.StudentMapper;
+import college.dorm.pojo.Student;
 import college.dorm.service.IStudentService;
-import college.dorm.service.except.ServiceException;
+import college.dorm.service.ex.ServiceException;
 
 @Service
 public class StudentServiceImpl implements IStudentService {

@@ -7,7 +7,7 @@
 <mapper namespace="college.dorm.mapper.VisitorMapper">
 
 	<select id="selectByVisitorName"
-		resultType="college.dorm.databean.Visitor">
+		resultType="college.dorm.pojo.Visitor">
 		SELECT
 		vid,
 		visitor_name AS visitorName,
@@ -26,7 +26,7 @@
 	</select>
 
 	<select id="selectByVid"
-		resultType="college.dorm.databean.Visitor">
+		resultType="college.dorm.pojo.Visitor">
 		SELECT vid,visitor_name AS visitorName,visitor_cardno AS
 		visitorCardno,visited_student_name AS
 		visitedStudentName,visited_student_building AS
@@ -65,7 +65,7 @@
 	</delete>
 
 	<select id="selectAllVisitor"
-		resultType="college.dorm.databean.Visitor">
+		resultType="college.dorm.pojo.Visitor">
 		SELECT vid,visitor_name AS visitorName,visitor_cardno AS
 		visitorCardno,visited_student_name AS
 		visitedStudentName,visited_student_building AS

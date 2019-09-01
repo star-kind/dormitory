@@ -7,7 +7,7 @@
 <mapper namespace="college.dorm.mapper.StudentMapper">
 
 	<select id="selectStudentByStudentName"
-		resultType="college.dorm.databean.Student">
+		resultType="college.dorm.pojo.Student">
 		SELECT
 		sid,
 		student_no AS studentNo,
@@ -23,7 +23,7 @@
 	</select>
 
 	<select id="selectStudentBySid"
-		resultType="college.dorm.databean.Student">
+		resultType="college.dorm.pojo.Student">
 		SELECT
 		sid,
 		student_no AS studentNo,
@@ -39,7 +39,7 @@
 	</select>
 
 	<select id="selectStudentByStudentNo"
-		resultType="college.dorm.databean.Student">
+		resultType="college.dorm.pojo.Student">
 		SELECT
 		sid,
 		student_no AS studentNo,
@@ -55,7 +55,7 @@
 	</select>
 
 	<select id="selectAllStudents"
-		resultType="college.dorm.databean.Student">
+		resultType="college.dorm.pojo.Student">
 		SELECT
 		sid,
 		student_no AS studentNo,

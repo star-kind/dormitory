@@ -8,10 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import college.dorm.databean.Visitor;
 import college.dorm.mapper.VisitorMapper;
+import college.dorm.pojo.Visitor;
 import college.dorm.service.IVisitorService;
-import college.dorm.service.except.ServiceException;
+import college.dorm.service.ex.ServiceException;
 
 @Service
 public class VisitorServiceImpl implements IVisitorService {
