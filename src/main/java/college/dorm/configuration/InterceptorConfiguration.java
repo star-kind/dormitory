@@ -27,6 +27,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 		remit.add("/MySelfJS/**");
 		remit.add("/MinePages/**");
 
+		remit.add("/HouseParents/**");
+		remit.add("/Visit/**");
+		remit.add("/Students/**");
+
 		// 注册拦截器
 		registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(remit);
 	}

@@ -17,9 +17,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
+		String contextPath = request.getServletContext().getContextPath();
+		System.out.println("contextPath:" + contextPath);
 
 		if (session.getAttribute("houseparentID") == null || "".equals(session.getAttribute("houseparentID"))) {
-			response.sendRedirect("/MinePages/Login.html");
+			response.sendRedirect(contextPath + "/HouseParents/logining");
 			return false;
 		}
 

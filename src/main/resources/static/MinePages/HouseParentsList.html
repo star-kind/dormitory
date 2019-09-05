@@ -69,7 +69,7 @@ img {
 					</div>
 
 					<!-- 按选项定之 -->
-					<div id="mine_block01">
+					<div id="mine_block01" style="margin-bottom: 40px;">
 						<select style="margin-right: 30px; width: 80px; height: 42px;" class="btn btn-default" id="sudo_select">
 							<option value="0">删除</option>
 							<option value="1">提拔</option>
@@ -108,10 +108,10 @@ img {
 						$('#hp_tbody').empty();
 
 						var list = re.data;
-						
-						var n=1;
-						
-						for (var i = 0; i < list.length ; i++) {
+
+						var n = 1;
+
+						for (var i = 0; i < list.length; i++) {
 							//获取单行文本内容对象
 							var trTd = "<tr id='hpid_#{hpid}'>"
 									+ "<td> <input type='checkbox' value='#{hpid}' class='hp_item'> <span>" + n++
