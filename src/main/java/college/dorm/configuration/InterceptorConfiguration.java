@@ -2,6 +2,7 @@ package college.dorm.configuration;
 
 import java.util.ArrayList;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -13,6 +14,7 @@ import college.dorm.intercept.LoginInterceptor;
  * @author gzh
  *
  */
+@Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {
 
 	@Override
