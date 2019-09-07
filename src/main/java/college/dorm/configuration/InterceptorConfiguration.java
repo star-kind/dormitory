@@ -24,11 +24,13 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 		// 豁免列表
 		ArrayList<String> remit = new ArrayList<>();
 
+		// 静态页面文件
 		remit.add("/CssFrame/**");
 		remit.add("/Jquery/**");
 		remit.add("/MySelfJS/**");
 		remit.add("/MinePages/**");
 
+		// 控制器访问路径
 		remit.add("/HouseParents/**");
 		remit.add("/Visit/**");
 		remit.add("/Students/**");
