@@ -54,7 +54,7 @@ in system the houseparent can self reg,when houseparent logged in it,she can add
 
 * 修复了一些故障
 
-* 利用正则,对登记时所填之数据进行了格式规范
+* 新增正则校验,对登记时所填之数据进行了格式规范
 
 * 皆新增了"将表格导出为Excel表文件"之功能.
 ------------------------------------------------------
