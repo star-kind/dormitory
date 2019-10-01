@@ -1,9 +1,9 @@
-# dormitory sys profile
+# Dormitory Introduce Profile
 A simple system of college dormitory manager
 
-this system had three module:houseparent,student,visitor.
+This system had three module:houseparent,student,visitor.
 
-in system the houseparent can self reg,when houseparent logged in it,she can add/delete/modify/look over all the students/visitors.
+In system the houseparent can self reg,when houseparent logged in it,she can add/delete/modify/survey over all the students/visitors.
 
 
 # technology structure
@@ -12,7 +12,7 @@ in system the houseparent can self reg,when houseparent logged in it,she can add
 - database: mysql
 - jdk: 10
 - server: tomcat
-- IDE: eclipse for jee Dev
+- IDE: eclipse
 - frame: springboot+bootstrap
 - language: mysql+java+HTML+CSS+jquery+ajax
 - spent time: 1 day.
@@ -46,7 +46,7 @@ in system the houseparent can self reg,when houseparent logged in it,she can add
 
 * 登录前校验生成的验证码
 
-* 利用正则,对注册时所填之数据进行了格式规范
+* 新增正则校验,对注册时所填之数据进行了格式规范
 ------------------------------------------------------
 
 
