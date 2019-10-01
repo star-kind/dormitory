@@ -17,10 +17,9 @@ in system the houseparent can self reg,when houseparent logged in it,she can add
 - language: mysql+java+HTML+CSS+jquery+ajax
 - spent time: 1 day.
 
+-----------------------------------------------------------------------------------------------------------
 
-
-		  	 新增功能
-----------------------------------------------------------------------
+## 二次重构
 
 ### 数据表
 
