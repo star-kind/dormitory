@@ -14,7 +14,7 @@ In system the houseparent can self reg,when houseparent logged in it,she can add
 - server: tomcat
 - IDE: eclipse
 - frame: springboot+bootstrap
-- language: mysql+java+HTML+CSS+jquery+ajax
+- language: mysql+java+HTML+CSS+jquery+JavaScript+ajax
 - spent time: 1 day.
 
 -----------------------------------------------------------------------------------------------------------
